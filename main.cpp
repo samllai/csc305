@@ -53,10 +53,14 @@ void Triangle::loadDataToGPU(
 }
 
 void Triangle::reloadShaders()
-{}
+{
+	//handling on-the-fly reloading of shaders
+	//check if shader needs to be reloaded and reload it
+}
 
 void Triangle::render()
 {
+	reloadShaders();
 	glUseProgram(mProgramHandle);
 	glBindVertexArray(mVao);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -67,6 +71,8 @@ void Triangle::freeGPUData()
 	glDeleteProgram(mProgramHandle);
 	glDeleteShader(mVertHandle);
 	glDeleteShader(mFragHandle);
+	glDeleteVertexArrays(1, &mVao);
+	glDeleteBuffers(1, &mVbo);
 }
 
 // ===------------IMPLEMENTATIONS-------------===
